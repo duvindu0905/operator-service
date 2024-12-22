@@ -1,0 +1,240 @@
+{
+    "openapi": "3.0.0",
+    "info": {
+      "title": "Operator Service API",
+      "description": "API for managing operators in the system.",
+      "version": "1.0"
+    },
+    "servers": [
+      {
+        "url": "http://localhost:8087",
+        "description": "Development Server"
+      },
+      {
+        "url": "https://api.operatorservice.bussewaya.online",
+        "description": "Production Server"
+      }
+    ],
+    "paths": {
+      "/operator-service/operators": {
+        "post": {
+          "summary": "Create a new operator",
+          "tags": ["Operator"],
+          "operationId": "createOperator",
+          "requestBody": {
+            "required": true,
+            "content": {
+              "application/json": {
+                "schema": {
+                  "$ref": "#/components/schemas/Operator"
+                }
+              }
+            }
+          },
+          "responses": {
+            "201": {
+              "description": "Operator created successfully",
+              "content": {
+                "application/json": {
+                  "schema": {
+                    "$ref": "#/components/schemas/Operator"
+                  }
+                }
+              }
+            },
+            "400": {
+              "description": "Bad request",
+              "content": {
+                "application/json": {
+                  "example": {
+                    "message": "Required fields missing"
+                  }
+                }
+              }
+            }
+          }
+        },
+        "get": {
+          "summary": "Get all operators",
+          "tags": ["Operator"],
+          "operationId": "getAllOperators",
+          "responses": {
+            "200": {
+              "description": "A list of all operators",
+              "content": {
+                "application/json": {
+                  "type": "array",
+                  "items": {
+                    "$ref": "#/components/schemas/Operator"
+                  }
+                }
+              }
+            }
+          }
+        }
+      },
+      "/operator-service/operators/{operatorId}": {
+        "get": {
+          "summary": "Get an operator by operatorId",
+          "tags": ["Operator"],
+          "operationId": "getOperatorById",
+          "parameters": [
+            {
+              "name": "operatorId",
+              "in": "path",
+              "required": true,
+              "description": "The operator ID to retrieve",
+              "schema": {
+                "type": "number"
+              }
+            }
+          ],
+          "responses": {
+            "200": {
+              "description": "Operator details",
+              "content": {
+                "application/json": {
+                  "$ref": "#/components/schemas/Operator"
+                }
+              }
+            },
+            "404": {
+              "description": "Operator not found"
+            }
+          }
+        },
+        "put": {
+          "summary": "Update an operator by operatorId",
+          "tags": ["Operator"],
+          "operationId": "updateOperator",
+          "parameters": [
+            {
+              "name": "operatorId",
+              "in": "path",
+              "required": true,
+              "description": "The operator ID to update",
+              "schema": {
+                "type": "number"
+              }
+            }
+          ],
+          "requestBody": {
+            "required": true,
+            "content": {
+              "application/json": {
+                "schema": {
+                  "$ref": "#/components/schemas/Operator"
+                }
+              }
+            }
+          },
+          "responses": {
+            "200": {
+              "description": "Operator updated successfully",
+              "content": {
+                "application/json": {
+                  "$ref": "#/components/schemas/Operator"
+                }
+              }
+            },
+            "400": {
+              "description": "Bad request",
+              "content": {
+                "application/json": {
+                  "example": {
+                    "message": "Invalid operator data"
+                  }
+                }
+              }
+            },
+            "404": {
+              "description": "Operator not found"
+            }
+          }
+        },
+        "delete": {
+          "summary": "Delete an operator by operatorId",
+          "tags": ["Operator"],
+          "operationId": "deleteOperator",
+          "parameters": [
+            {
+              "name": "operatorId",
+              "in": "path",
+              "required": true,
+              "description": "The operator ID to delete",
+              "schema": {
+                "type": "number"
+              }
+            }
+          ],
+          "responses": {
+            "200": {
+              "description": "Operator deleted successfully",
+              "content": {
+                "application/json": {
+                  "example": {
+                    "message": "Operator deleted successfully"
+                  }
+                }
+              }
+            },
+            "404": {
+              "description": "Operator not found"
+            }
+          }
+        }
+      }
+    },
+    "components": {
+      "schemas": {
+        "Operator": {
+          "type": "object",
+          "properties": {
+            "operatorId": {
+              "type": "number",
+              "example": 1
+            },
+            "userName": {
+              "type": "string",
+              "example": "operatorUser"
+            },
+            "passWord": {
+              "type": "string",
+              "example": "password123"
+            },
+            "fullName": {
+              "type": "string",
+              "example": "John Operator"
+            },
+            "address": {
+              "type": "string",
+              "example": "456 Operator Street"
+            },
+            "phoneNumber": {
+              "type": "number",
+              "example": 9876543210
+            },
+            "nic": {
+              "type": "string",
+              "example": "123456789V"
+            },
+            "email": {
+              "type": "string",
+              "example": "operatoruser@example.com"
+            }
+          },
+          "required": [
+            "operatorId",
+            "userName",
+            "passWord",
+            "fullName",
+            "address",
+            "phoneNumber",
+            "nic",
+            "email"
+          ]
+        }
+      }
+    }
+  }
+  
