@@ -1,4 +1,4 @@
-const mongoose = require('mongoose');
+const mongoose = require('mongoose');  // Import mongoose
 
 const operatorSchema = new mongoose.Schema({
   operatorId: {
