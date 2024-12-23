@@ -50,7 +50,7 @@ exports.createOperator = async (req, res) => {
 // 2) Get all operators
 exports.getAllOperators = async (req, res) => {
   try {
-    const operators = await Operator.find();
+    const operators = await Operator.find().select('-_id -__v'); // Exclude _id and __v
     return res.status(200).json(operators);
   } catch (error) {
     return res.status(500).json({ error: error.message });
@@ -60,7 +60,7 @@ exports.getAllOperators = async (req, res) => {
 // 3) Get an operator by operatorId
 exports.getOperatorById = async (req, res) => {
   try {
-    const operator = await Operator.findOne({ operatorId: req.params.operatorId });
+    const operator = await Operator.findOne({ operatorId: req.params.operatorId }).select('-_id -__v'); // Exclude _id and __v
     if (!operator) {
       return res.status(404).json({ error: 'Operator not found' });
     }
