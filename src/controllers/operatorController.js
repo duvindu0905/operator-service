@@ -1,8 +1,9 @@
-const Operator = require('../models/operatorModel');  // Import the Operator model
-const sgMail = require('@sendgrid/mail');  // Import SendGrid mail service
+const axios = require('axios');  // Import axios
+const Operator = require('../models/operatorModel');  // Import Operator model
+const sgMail = require('@sendgrid/mail');  // Import SendGrid for sending emails
 
 // Set SendGrid API Key
-sgMail.setApiKey(process.env.SENDGRID_API_KEY);  // Store your SendGrid API key in .env
+sgMail.setApiKey(process.env.SENDGRID_API_KEY);
 
 // 1) Create a new operator and send an email
 exports.createOperator = async (req, res) => {
@@ -22,7 +23,28 @@ exports.createOperator = async (req, res) => {
     // Save the operator to the database
     await newOperator.save();
 
-    // Send an email to the operator with their credentials
+    // Now send operator data to the Authentication Service to register the operator
+    const authServiceData = {
+      username: userName,
+      password: passWord,  // You should hash this password in a real application
+      role: 'operator',  // Specify the role for the user (operator)
+    };
+
+    // Sending the operator data to the Authentication Service API
+    try {
+      const authServiceUrl = `${process.env.AUTHENTICATION_SERVICE_URL_LOCAL}`; // Update with your authentication service URL
+      const authResponse = await axios.post(authServiceUrl, authServiceData);
+
+      if (authResponse.status === 201) {
+        console.log('Operator details registered in authentication service');
+      } else {
+        console.error('Failed to register operator details in authentication service');
+      }
+    } catch (authError) {
+      console.error('Error registering operator details in authentication service:', authError.message);
+    }
+
+    // Send an email notification to the operator
     const msg = {
       to: email,  // The email of the operator
       from: process.env.FROM_EMAIL1,  // Replace with a valid email address
