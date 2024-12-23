@@ -37,4 +37,8 @@ jobs:
             PORT=8087,\
             SENDGRID_API_KEY=${{ secrets.SENDGRID_API_KEY }},\
             FROM_EMAIL=duvindudushan@gmail.com,\
-            FROM_EMAIL1=info@em665.bussewaya.online
+            FROM_EMAIL1=info@em665.bussewaya.online,\
+            MONGO_URI_AUTHENTICATION=${{ secrets.MONGO_URI_AUTHENTICATION }},\
+            AUTHENTICATION_SERVICE_URL_LOCAL=http://localhost:8088/authentication-service/users,\
+            AUTHENTICATION_SERVICE_URL_PRODUCTION=https://api.authenticationservice.bussewaya.online/authentication-service/users
+
