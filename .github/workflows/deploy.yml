@@ -40,5 +40,5 @@ jobs:
             FROM_EMAIL1=info@em665.bussewaya.online,\
             MONGO_URI_AUTHENTICATION=${{ secrets.MONGO_URI_AUTHENTICATION }},\
             AUTHENTICATION_SERVICE_URL_LOCAL=http://localhost:8088/authentication-service/users,\
-            AUTHENTICATION_SERVICE_URL_PRODUCTION=https://api.authenticationservice.bussewaya.online/authentication-service/users
+            AUTHENTICATION_SERVICE_URL_PRODUCTION=https://authentication-service-193893744076.us-central1.run.app/authentication-service/users
 
